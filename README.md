@@ -11,18 +11,20 @@ Punkto Application
 3. All methods, classes and properties MUST be properly documented using JSDoc comments
 4. All code MUST conform to the style guide
 5. All code MUST pass tests with 100% coverage before they will be accepted
+6. 6. In lieue of a an API, use Jasmine 'mocks' to simluate APIs
 
 ## Files
 
 - src
--   /scripts - Client-side application code (angular)
--   /test - Tests for the client-side application
--   /assets - Any non-JS and non-core assets (images, assets, data)
--   /views - Any HTML tempalte code used by application views
+-   -/scripts - Client-side application code (angular)
+-   -/test - Tests for the client-side application
+-   -/assets - Any non-JS and non-core assets (images, assets, data)
+-   -/views - Any HTML tempalte code used by application views
 
 ## Documentation
 
 Jasmine Test Suite - http://jasmine.github.io/2.0/introduction.html   
+Using Jasmine Mocks - http://eclipsesource.com/blogs/2014/03/27/mocks-in-jasmine-tests/
 
 ## Resources
 
