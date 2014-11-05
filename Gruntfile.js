@@ -226,7 +226,8 @@ module.exports = function (grunt) {
                         '.htaccess',
                         '*.html',
                         'views/{,*/}*.html',
-                        'assets/**/*'
+                        'assets/**/*',
+                        'data/**/*'
                     ]
                 }, {
                     expand: true,

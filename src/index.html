@@ -16,32 +16,46 @@
 
   <!-- build:css(.tmp) styles/punkto.css -->
   <link rel="stylesheet" href="styles/punkto.css">
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css"><link/>
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css"><link/>
+  <link rel="stylesheet" href="bower_components/angular-ui-grid/ui-grid.min.css"><link/>
+  <link rel="stylesheet" href="bower_components/leaflet/dist/leaflet.css"><link/>  
   <!-- endbuild -->
 
 </head>
-<body ng-app="testingApp">
+<body ng-app="twineApp">
 <!--[if lt IE 7]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
   your browser</a> to improve your experience.</p>
 <![endif]-->
 
 <!-- Add your site or application content here -->
-<div class="container">
-  <div class="header">
-    <ul class="nav nav-pills pull-right">
-      <li class="active"><a ng-href="#">Home</a></li>
-      <li><a ng-href="#/about">About</a></li>
-      <li><a ng-href="#">Contact</a></li>
-    </ul>
-    <h3 class="text-muted">testing</h3>
-  </div>
+  <!-- header -->
+  <div class="siv-header" id="siv-head-wrap"></div>
 
-  <div ng-view=""></div>
+  <!-- twine app controller -->
+  <div ng-controller="twineAppCtrl">
 
-  <div class="footer">
-    <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
+    <!-- twine map controller -->
+    <div ng-controller="MapCtrl">
+      <div class="col-sm-8 col-md-8 col-lg-8" style="padding: 0">
+        <leaflet defaults="defaults" center="center" markers="markers" layers="layers" event-broadcast="events" width="100%" height="640px"></leaflet>
+      </div>
+    </div>
+    <!-- end twine map -->
+
+    <!-- Table -->
+    <div ng-controller="GridCtrl">
+      <div class="col-sm-4 col-md-4 col-lg-4">
+        <!-- Table -->
+        <!-- <div id="twineGridTable" ui-grid="twineGridOptions" class="grid"></div> -->
+        <div id="twineGridTable" ui-grid="twineGridOptions" class="grid"></div>
+      </div>
+    </div>
+    <!-- end table -->
+
   </div>
-</div>
+  <!-- end app -->
 
 
 <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
@@ -78,6 +92,9 @@
 <script src="bower_components/angular-animate/angular-animate.js"></script>
 <script src="bower_components/angular-touch/angular-touch.js"></script>
 <script src="bower_components/angular-route/angular-route.js"></script>
+<script src="bower_components/angular-ui-grid/ui-grid.min.js"></script>
+<script src="bower_components/angular-leaflet-directive/dist/angular-leaflet-directive.min.js"></script>
+<script src="bower_components/leaflet/dist/leaflet.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
