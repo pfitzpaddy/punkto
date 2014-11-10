@@ -10,7 +10,6 @@
  */
 angular
 	.module('twineApp', [
-		'ngAnimate',
 		'ngCookies',
 		'ngResource',
 		'ngRoute',
@@ -34,9 +33,6 @@ angular
 		$http.get("data/ifrc-dbm-serria-leone.json").success( function( json, status ) {
 			// Add markers to $scope
 			angular.forEach(json.data, function(d, i) {
-
-				console.log(d);
-
 				if ( typeof d.Latitude === "number" && typeof d.Longitude === "number" ) {			
 					// Push onto array of markers
 					this.push({
@@ -96,8 +92,8 @@ angular
 		// filter uuid
 		$scope.filterTeam = function( m ) {
 			// Search uuid
-			if ( $scope.uuidSearch && $scope.uuidSearch.length > 0 ) {
-				return m.uuid.indexOf($scope.uuidSearch) > -1;
+			if ( $scope.teamSearch && $scope.teamSearch.length > 0 ) {
+				return m.teamId == $scope.teamSearch;
 			} else {
 				return true;
 			}
@@ -106,8 +102,9 @@ angular
 		// filter country name
 		$scope.filterDistrict = function( m ) {
 			// Search country
-			if ( $scope.countrynameSearch && $scope.countrynameSearch.length > 0 ) {
-				return m.countryname.toLowerCase().indexOf($scope.countrynameSearch.toLowerCase()) > -1;
+
+			if ( $scope.districtSearch && $scope.districtSearch.length > 0 ) {
+				return m.district.toLowerCase().indexOf($scope.districtSearch.toLowerCase()) > -1;
 			} else {
 				return true;
 			}
@@ -116,8 +113,8 @@ angular
 		// filter location name
 		$scope.filterAlert = function( m ) {
 			// Search location name
-			if ( $scope.nameSearch && $scope.nameSearch.length > 0 ) {
-				return m.name.toLowerCase().indexOf($scope.nameSearch.toLowerCase()) > -1;
+			if ( $scope.alertSearch && $scope.alertSearch.length > 0 ) {
+				return m.alert.toLowerCase().indexOf($scope.alertSearch.toLowerCase()) > -1;
 			} else {
 				return true;
 			}
