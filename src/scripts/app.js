@@ -30,6 +30,7 @@ var app = angular.module('twineApp', [
 		// Marker data 
 		$scope.bales = [];
 		$scope.balesDisplay = [];
+		$scope.balesDisplay = $scope.bales;
 
 		// Get the countries geojson data from a JSON
 		$http.get("data/ifrc-dbm-serria-leone.json").success( function( json, status ) {
@@ -52,22 +53,22 @@ var app = angular.module('twineApp', [
 			}, $scope.bales );
 			
 			// Run initial filter
-			$scope.filterData();			
+			// $scope.filterData();
 		});
 
-		$scope.filterData = function() {
-			//
-			$scope.balesDisplay = $scope.bales;
-			$scope.balesDisplay = $filter('filter')($scope.bales, function( bale, i ){
-				angular.forEach( bale, function( d, key ) {
-					//
-					if ($scope.columns) {
-						console.log($scope.columns);
-					}
-				});
-				return true;
-			});
-		}
+		// $scope.filterData = function() {
+		// 	//
+		// 	$scope.balesDisplay = $scope.bales;
+		// 	$scope.balesDisplay = $filter('filter')($scope.bales, function( bale, i ){
+		// 		angular.forEach( bale, function( d, key ) {
+		// 			//
+		// 			if ($scope.columns) {
+		// 				console.log($scope.columns);
+		// 			}
+		// 		});
+		// 		return true;
+		// 	});
+		// }
 
 		// // Run filter on search Box change
 		// $scope.$watch( 'teamId', 'district', 'alert', function () {

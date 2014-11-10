@@ -22,6 +22,7 @@ angular.module( 'GridModule', [
 
 		// Set grid height
 		$scope.twineGridOptions = {
+			data: $scope.ngTwine.balesDisplay,
 			enableFiltering: true,
 			onRegisterApi: function( gridApi ) {
 				$scope.gridApi = gridApi;
@@ -29,13 +30,15 @@ angular.module( 'GridModule', [
 					
 					// Filter data
 					//$scope.ngTwine.filterData();
+
+					console.log( $scope.gridApi )//.getVisibleRows( $scope.twineGridOptions ) );
 				});
 			}
 		};
 
 		// Watch application marker data
-		$scope.$watch( 'ngTwine.balesDisplay', function () {
-			$scope.twineGridOptions.data = $scope.ngTwine.balesDisplay;
-			$scope.ngTwine.columns = $scope.gridApi.grid.columns;
-		});
+		// $scope.$watch( 'ngTwine.balesDisplay', function () {
+		// 	$scope.twineGridOptions.data = $scope.ngTwine.balesDisplay;
+		// 	$scope.ngTwine.columns = $scope.gridApi.grid.columns;
+		// });
 	}]);
