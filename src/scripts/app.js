@@ -31,12 +31,9 @@ angular
 		$scope.alert = $location.search().alert;
 
 		// Get the countries geojson data from a JSON
-		$http.get("data/geolevels.json").success( function( json, status ) {
+		$http.get("data/ifrc-dbm-serria-leone.json").success( function( json, status ) {
 			// Add markers to $scope
-
-			console.log(json);
-
-			angular.forEach(json, function(d, i) {
+			angular.forEach(json.data, function(d, i) {
 
 				console.log(d);
 
