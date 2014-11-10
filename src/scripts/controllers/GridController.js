@@ -23,27 +23,27 @@ angular
 			enableFiltering: true,
 			columnDefs: [
 				{ 
-					field: 'uuid',
+					field: 'teamId',
 					filter: {
-						term: $scope.ngTwine.uuidSearch,
+						term: $scope.ngTwine.teamSearch,
 						condition: function(searchTerm, cellValue) {
 							return true;
 						}
 					}
 				},
 				{ 
-					field: 'countryname',
+					field: 'district',
 					filter: {
-						term: $scope.ngTwine.countrynameSearch,
+						term: $scope.ngTwine.districtSearch,
 						condition: function(searchTerm, cellValue) {
 							return true;
 						}
 					}
 				},
 				{ 
-					field: 'name',
+					field: 'alert',
 					filter: {
-						term: $scope.ngTwine.nameSearch,
+						term: $scope.ngTwine.alertSearch,
 						condition: function(searchTerm, cellValue) {
 							return true;
 						}
@@ -55,9 +55,9 @@ angular
 				$scope.gridApi.core.on.filterChanged( $scope, function() {
 					
 					// On filter changed, get filter values
-					$scope.ngTwine.uuidSearch = this.grid.columns[0].filter.term;
-					$scope.ngTwine.countrynameSearch = this.grid.columns[1].filter.term;
-					$scope.ngTwine.nameSearch = this.grid.columns[2].filter.term;
+					$scope.ngTwine.teamSearch = this.grid.columns[0].filter.term;
+					$scope.ngTwine.districtSearch = this.grid.columns[1].filter.term;
+					$scope.ngTwine.alertSearch = this.grid.columns[2].filter.term;
 					// Filter data
 					$scope.ngTwine.filterData();
 				});

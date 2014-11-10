@@ -26,40 +26,35 @@ angular
 		$scope.markerData = [];
 		$scope.markerDataFiltered = [];
 		// URL search params
-		$scope.uuidSearch = $location.search().uuid;
-		$scope.countrynameSearch = $location.search().country;
-		$scope.nameSearch = $location.search().location;
+		$scope.teamSearch = $location.search().team;
+		$scope.districtSearch = $location.search().district;
+		$scope.alert = $location.search().alert;
 
 		// Get the countries geojson data from a JSON
-		$http.get("data/geolevels.json").success( function( geojson, status ) {
+		$http.get("data/geolevels.json").success( function( json, status ) {
 			// Add markers to $scope
-			angular.forEach(geojson.features, function(location, i) {
-				if ( location.geometry.coordinates[0] != 0 
-					&& location.geometry.coordinates[1] != 0
-					&& location.properties.countryname ) {
 
-					// Format popup string
-					var type="";
-					var iconType = location.properties.map_icon.replace(".png","").split("-");
-					angular.forEach(iconType, function(t, j) { type += t.charAt(0).toUpperCase() + t.slice(1) + " "; });
-					var popup = '<div align="left"><b>' + location.properties.countryname + '</b>';
-						popup += '<br/>Location: ' + location.properties.name;
-						popup += '<br/>Type: ' + type.slice(0,-1) + '</div>';					
+			console.log(json);
 
+			angular.forEach(json, function(d, i) {
+
+				console.log(d);
+
+				if ( typeof d.Latitude === "number" && typeof d.Longitude === "number" ) {			
 					// Push onto array of markers
 					this.push({
 						layer: 'locations',
-						uuid: location.properties.uuid,
-						countryname: location.properties.countryname,
-						name: location.properties.name,
-						geolevel: location.properties.geolevel,
-						lng: location.geometry.coordinates[0],
-						lat: location.geometry.coordinates[1],
-						message: popup,
+						uuid: d.ID,
+						teamId: d.TeamID,
+						district: d.District,
+						alert: d.AlertDate,
+						lng: d.Longitude,
+						lat: d.Latitude,
+						message: d.District,
 						focus: false,						
 						icon: { 
 							iconSize: [18, 18],
-							iconUrl: 'assets/icons/' + location.properties.map_icon
+							iconUrl: 'assets/icons/refugee-camp-healthfacility.png'
 						}
 					});
 				}
@@ -71,7 +66,7 @@ angular
 		});
 
 		// Run filter on search Box change
-		$scope.$watch( "uuidSearch", "countrynameSearch", "nameSearch", function () {
+		$scope.$watch( "teamId", "district", "alert", function () {
 			$scope.filterData();
 		}, true);
 
@@ -83,7 +78,7 @@ angular
 			$scope.markerDataFiltered = [];
 			angular.forEach( $scope.markerData, function( m, key ) {
 				// Filter on all columns
-				if ( $scope.filterUuid( m ) && $scope.filterCountryname( m ) && $scope.filterName( m ) ) {
+				if ( $scope.filterTeam( m ) && $scope.filterDistrict( m ) && $scope.filterAlert( m ) ) {
 					this.push( m );
 				}
 			}, $scope.markerDataFiltered );
@@ -91,10 +86,10 @@ angular
 
 		// Update URL
 		$scope.setUrlParams = function(){
-			if ($scope.uuidSearch || $scope.countrynameSearch || $scope.nameSearch ) {
-				$location.search( 'uuid', $scope.uuidSearch );
-				$location.search( 'country', $scope.countrynameSearch );
-				$location.search( 'location', $scope.nameSearch );
+			if ($scope.teamSearch || $scope.districtSearch || $scope.alertSearch ) {
+				$location.search( 'team', $scope.teamSearch );
+				$location.search( 'district', $scope.districtSearch );
+				$location.search( 'alert', $scope.alertSearch );
 			} else {
 				$location.search({});
 				$location.path('');
@@ -102,7 +97,7 @@ angular
 		};
 		
 		// filter uuid
-		$scope.filterUuid = function( m ) {
+		$scope.filterTeam = function( m ) {
 			// Search uuid
 			if ( $scope.uuidSearch && $scope.uuidSearch.length > 0 ) {
 				return m.uuid.indexOf($scope.uuidSearch) > -1;
@@ -112,7 +107,7 @@ angular
 		};
 
 		// filter country name
-		$scope.filterCountryname = function( m ) {
+		$scope.filterDistrict = function( m ) {
 			// Search country
 			if ( $scope.countrynameSearch && $scope.countrynameSearch.length > 0 ) {
 				return m.countryname.toLowerCase().indexOf($scope.countrynameSearch.toLowerCase()) > -1;
@@ -122,7 +117,7 @@ angular
 		};
 
 		// filter location name
-		$scope.filterName = function( m ) {
+		$scope.filterAlert = function( m ) {
 			// Search location name
 			if ( $scope.nameSearch && $scope.nameSearch.length > 0 ) {
 				return m.name.toLowerCase().indexOf($scope.nameSearch.toLowerCase()) > -1;
