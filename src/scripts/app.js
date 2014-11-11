@@ -34,14 +34,14 @@ var app = angular.module('twineApp', [
 		$http.get("data/ifrc-dbm-serria-leone.json").success( function( json, status ) {
 			// Add markers to $scope
 			angular.forEach(json.data, function(d, i) {
-				if ( typeof d.Latitude === "number" && typeof d.Longitude === "number" ) {			
+				if ( typeof d.Latitude === "number" && typeof d.Longitude === "number" ) {          
 					// Push onto array of markers
 					this.push({
 						uuid: d.ID,
 						name: d.District,
 						lng: d.Longitude,
 						lat: d.Latitude,
-						message: '<div align="center"><b>' + d.District + '</b><br/>' + d.AlertDate + '<br/>Deceased Collected From: ' + d.DeceasedCollectedFrom + '</div>',					
+						message: '<div align="center"><b>' + d.District + '</b><br/>' + d.AlertDate + '<br/>Deceased Collected From: ' + d.DeceasedCollectedFrom + '</div>',                    
 						icon: { 
 							iconSize: [18, 18],
 							iconUrl: 'assets/icons/refugee-camp-healthfacility.png'
@@ -49,6 +49,6 @@ var app = angular.module('twineApp', [
 					});
 				}
 			}, $scope.baleData );
-		});
+		});	
 
 	}]);

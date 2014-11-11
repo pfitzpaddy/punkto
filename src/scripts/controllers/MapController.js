@@ -28,9 +28,10 @@ angular.module( 'MapModule', [
 
 // module main controller
 .controller( 'MapCtrl', [ 
-	'$scope', 
+	'$scope',
+	'$http',
 	'leafletData', 
-	function( $scope, leaflet ) {
+	function( $scope, $http, leaflet ) {
 		
 		// App main
 		$scope.ngTwine = $scope.$parent;
@@ -76,6 +77,19 @@ angular.module( 'MapModule', [
 				}				
 			}
 		});
+
+		// Get the countries geojson data from a JSON
+		$http.get("data/geolevels.json").success( function( data, status ) {
+			$scope.geolevels = topojson.feature( data, data.objects.geolevel3 );
+			angular.extend( $scope, {
+				geojson: {
+					data: $scope.geolevels,
+					style: {
+						className: 'geolevel3'
+					}
+				}
+			});			
+		});			
 
 		// Add zoom control to bottom left
 		leaflet.getMap().then( function( map ) {
