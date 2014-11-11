@@ -27,10 +27,8 @@ var app = angular.module('twineApp', [
 	'$location', 
 	function( $scope, $http, $filter, $location ){
 
-		// Marker data 
-		$scope.bales = [];
-		$scope.balesDisplay = [];
-		$scope.balesDisplay = $scope.bales;
+		// Bale data 
+		$scope.baleData = [];
 
 		// Get the countries geojson data from a JSON
 		$http.get("data/ifrc-dbm-serria-leone.json").success( function( json, status ) {
@@ -40,39 +38,17 @@ var app = angular.module('twineApp', [
 					// Push onto array of markers
 					this.push({
 						uuid: d.ID,
-						layer: 'locations',
 						name: d.District,
 						lng: d.Longitude,
-						lat: d.Latitude,					
+						lat: d.Latitude,
+						message: '<div align="center"><b>' + d.District + '</b><br/>' + d.AlertDate + '<br/>Deceased Collected From: ' + d.DeceasedCollectedFrom + '</div>',					
 						icon: { 
 							iconSize: [18, 18],
 							iconUrl: 'assets/icons/refugee-camp-healthfacility.png'
 						}
 					});
 				}
-			}, $scope.bales );
-			
-			// Run initial filter
-			// $scope.filterData();
+			}, $scope.baleData );
 		});
-
-		// $scope.filterData = function() {
-		// 	//
-		// 	$scope.balesDisplay = $scope.bales;
-		// 	$scope.balesDisplay = $filter('filter')($scope.bales, function( bale, i ){
-		// 		angular.forEach( bale, function( d, key ) {
-		// 			//
-		// 			if ($scope.columns) {
-		// 				console.log($scope.columns);
-		// 			}
-		// 		});
-		// 		return true;
-		// 	});
-		// }
-
-		// // Run filter on search Box change
-		// $scope.$watch( 'teamId', 'district', 'alert', function () {
-		// 	// $scope.filterData();
-		// }, true );
 
 	}]);

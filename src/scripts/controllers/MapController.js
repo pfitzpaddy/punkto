@@ -8,6 +8,10 @@
  *
  * Map module of the application.
  */
+
+// Grey
+// https://{s}.tiles.mapbox.com/v3/jduren.ifcogn99/{z}/{x}/{y}.png
+
 angular.module( 'MapModule', [ 
 	'leaflet-directive' 
 ])
@@ -28,6 +32,11 @@ angular.module( 'MapModule', [
 		// App main
 		$scope.ngTwine = $scope.$parent;
 
+		// Update map on table filter
+		$scope.$watch( 'ngTwine.baleData', function () {
+			$scope.updateMarkers();
+		});		
+
 		// Defaults
 		angular.extend( $scope, {
 			defaults: {
@@ -46,12 +55,12 @@ angular.module( 'MapModule', [
 					logic: 'emit'
 				}
 			},
-			markers: $scope.ngTwine.balesDisplay,
+			markers: $scope.ngTwine.baleData,
 			layers: {
 				baselayers: {
 					osm: {
 						name: 'OpenStreetMap',
-						url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+						url: 'http://{s}.tiles.mapbox.com/v3/aj.um7z9lus/{z}/{x}/{y}.png',
 						type: 'xyz'
 					}
 				},
@@ -70,39 +79,33 @@ angular.module( 'MapModule', [
 			new L.Control.Zoom( { position: 'bottomright' } ).addTo( map );
 		});
 
-		// Watch application marker data
-		$scope.$watch( 'ngTwine.balesDisplay', function () {
-			$scope.updateMarkers();
-		});
-
 		// Update markers and zoom to bounds (not sure why this does not bind)
 		$scope.updateMarkers = function() {
-			$scope.markers = $scope.ngTwine.balesDisplay;
-			leaflet.getMap().then(function(map) {
-				// 
-				if ( $scope.ngTwine.balesDisplay.length ) {
-					map.fitBounds($scope.getBounds($scope.markers));
+			$scope.markers = $scope.ngTwine.baleData;
+			leaflet.getMap().then( function( map ) {
+				if ( $scope.ngTwine.baleData.length ) {
+					map.fitBounds( $scope.getBounds( $scope.markers ) );
 				}
 			});
 		};
 
 		// Zoom to location
-		$scope.zoomToLocation = function(m) {
-			leaflet.getMap().then(function(map) {
-				map.setView( [m.lat, m.lng], 10 );
+		$scope.zoomToLocation = function( m ) {
+			leaflet.getMap().then( function( map ) {
+				map.setView( [m.lat, m.lng], 9 );
 			});
 		};		
 
 		// Get bounds from array of markers
-		$scope.getBounds = function(markers) {
+		$scope.getBounds = function( markers ) {
 			var latlngs = [];
 			// Create latlng array
-			angular.forEach(markers, function(m, key) {
-				this.push([m.lat,m.lng]);
-			}, latlngs);
+			angular.forEach( markers, function( m, key ) {
+				this.push( [m.lat,m.lng] );
+			}, latlngs );
 
 			// Return bounds
-			return new L.LatLngBounds(latlngs);
+			return new L.LatLngBounds( latlngs );
 		};
 
 	}]);

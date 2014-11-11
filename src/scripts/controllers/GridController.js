@@ -20,25 +20,32 @@ angular.module( 'GridModule', [
 		// App main
 		$scope.ngTwine = $scope.$parent;
 
-		// Set grid height
+		// Grid options
 		$scope.twineGridOptions = {
-			data: $scope.ngTwine.balesDisplay,
+			data: $scope.ngTwine.baleData,
 			enableFiltering: true,
 			onRegisterApi: function( gridApi ) {
+				
+				// ui.grid API
 				$scope.gridApi = gridApi;
-				$scope.gridApi.core.on.filterChanged( $scope, function() {
-					
-					// Filter data
-					//$scope.ngTwine.filterData();
 
-					console.log( $scope.gridApi )//.getVisibleRows( $scope.twineGridOptions ) );
+				// filter changed event
+				$scope.gridApi.core.on.filterChanged( $scope, function() {
+
+					// Filter data
+					setTimeout( function(){
+						$scope.ngTwine.baleData = [];
+
+						// For each filtered data, update main dataset
+						angular.forEach( $scope.gridApi.core.getVisibleRows( $scope.gridApi.grid ), function( d, i ) {
+							$scope.ngTwine.baleData.push( d.entity );
+						});
+					}, 0 );
+
+					// Update grid height to match page
+					$scope.gridApi.grid.gridHeight = window.innerHeight - 60;
 				});
 			}
 		};
 
-		// Watch application marker data
-		// $scope.$watch( 'ngTwine.balesDisplay', function () {
-		// 	$scope.twineGridOptions.data = $scope.ngTwine.balesDisplay;
-		// 	$scope.ngTwine.columns = $scope.gridApi.grid.columns;
-		// });
 	}]);
