@@ -33,6 +33,6 @@
   },
   "scripts": {
     "test": "grunt test",
-    "postinstall": "src/bower install"
+    "postinstall": "cd src && bower install"
   }
 }

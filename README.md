@@ -41,7 +41,7 @@ For ease of development, use `grunt serve` to run the application while writing 
 ## Setup
 
 1. run `sudo npm install -g grunt-cli bower`
-2. cd `npm install` (DO NOT USE sudo!)
+2. run `npm install` (DO NOT USE sudo!)
 
 ## Running
 
