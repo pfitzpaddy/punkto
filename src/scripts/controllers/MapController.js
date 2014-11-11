@@ -9,8 +9,11 @@
  * Map module of the application.
  */
 
-// Grey
+// Blue
 // https://{s}.tiles.mapbox.com/v3/jduren.ifcogn99/{z}/{x}/{y}.png
+
+// Grey
+// https://{s}.tiles.mapbox.com/v3/jduren.ifcp5ddj/{z}/{x}/{y}.png
 
 angular.module( 'MapModule', [ 
 	'leaflet-directive' 
